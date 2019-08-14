@@ -1,6 +1,7 @@
 (ns bank-account.core
   (:gen-class)
-  (:require [clojure.string :as string]))
+  (:require [clojure.string :as string])
+  (:require [clojure.core.match :refer [match]]))
 
 (defrecord Operation [date amount type])
 
@@ -20,9 +21,10 @@
   (cons (new-operation (now) amount "DEBIT") account))
 
 (defn to-amount [operation]
-  (if (= (:type operation) "DEBIT")
-      (- (.amount operation))
-      (.amount operation)))
+  (let [amount (.amount operation)]
+    (match [(.type operation)]
+      ["CREDIT"] amount
+      ["DEBIT"] (- amount))))
 
 (defn sum [numbers] (reduce + 0 numbers))
 
@@ -32,9 +34,10 @@
        (sum)))
 
 (defn statement-line [operation]
-  (if (= (:type operation) "DEBIT")
-  (str (.date operation) " |  | " (.amount operation))
-  (str (.date operation) " | " (.amount operation) " | ")))
+  (let [amount (.amount operation) date (.date operation)]
+    (match [(:type operation)]
+      ["CREDIT"] (str date " | " amount " | ")
+      ["DEBIT"] (str date " |  | " amount))))
 
 (defn print-statement [account]
   (->> account
