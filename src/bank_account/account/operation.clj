@@ -1,4 +1,4 @@
-(ns bank-account.operation
+(ns bank-account.account.operation
   (:gen-class)
   (:require [clojure.core.match :refer [match]]))
 

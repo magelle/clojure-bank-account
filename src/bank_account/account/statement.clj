@@ -1,8 +1,8 @@
-(ns bank-account.statement
+(ns bank-account.account.statement
   (:gen-class)
   (:require [clojure.string :as string]
-            [bank-account.core :refer :all]
-            [bank-account.operation :refer :all]
+            [bank-account.account.account :refer :all]
+            [bank-account.account.operation :refer :all]
             [clojure.core.match :refer [match]]))
 
 (defn statement-line [operation balance]
