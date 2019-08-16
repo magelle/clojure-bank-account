@@ -1,6 +1,9 @@
 (ns bank-account.core-test
   (:require [clojure.test :refer :all]
-            [bank-account.core :refer :all]))
+            [bank-account.core :refer :all]
+            [bank-account.balance :refer :all]
+            [bank-account.operation :refer :all]
+            [bank-account.statement :refer :all]))
 
 (deftest account-test
   (testing "A new bank account is empty"
